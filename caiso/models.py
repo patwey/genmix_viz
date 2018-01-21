@@ -24,7 +24,7 @@ class GenerationMix(models.Model):
 
 class Generation(models.Model):
     timestamp = models.DateTimeField()
-    megawatts = models.DecimalField(decimal_places=1, max_digits=10)
+    megawatts = models.FloatField()
     market = models.CharField(max_length=200)
     fuel = models.ForeignKey(Fuel, on_delete=models.CASCADE)
     generation_mix = models.ForeignKey(GenerationMix, on_delete=models.CASCADE)
