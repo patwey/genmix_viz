@@ -7,10 +7,6 @@ class GenerationMixDataWrapper:
         return list(map(GenerationDataWrapper, self.data))
 
 
-    def timestamp(self):
-        return self.generations()[0].timestamp()
-
-
 class GenerationDataWrapper:
     def __init__(self, data):
         self.data = data

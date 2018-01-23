@@ -32,14 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'caiso.apps.CaisoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'caiso.apps.CaisoConfig',
     'django_celery_beat',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

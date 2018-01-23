@@ -1,19 +1,22 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from datetime import date
+from .models import BalancingAuthority
+from .serializers import GenerationSerializer
 
-from .models import BalancingAuthority, Fuel, GenerationMix, Generation
 
-def index(request):
-    balancing_authorities_count = BalancingAuthority.objects.count()
-    fuels_count = Fuel.objects.count()
-    generation_mixes_count = GenerationMix.objects.count()
-    generations_count = Generation.objects.count()
+@csrf_exempt
+def latest_generation_day(request):
+    gens = []
 
-    context = {
-        'balancing_authorities_count': balancing_authorities_count,
-        'fuels_count': fuels_count,
-        'generation_mixes_count': generation_mixes_count,
-        'generations_count': generations_count,
-    }
+    try:
+        ba = BalancingAuthority.objects.get(name='CAISO') # TODO hard-coded
+        # gens = ba.generation_set.filter(timestamp__contains=date.today()) # TODO: filter by today's date
+        gens = ba.generation_set.all()
+    except: # TODO handle specific exceptions?
+        return HttpResponse(status=404)
 
-    return render(request, 'caiso/index.html', context)
+    serializer = GenerationSerializer(gens, many=True)
+    data = dict(generations=serializer.data)
+
+    return JsonResponse(data)
