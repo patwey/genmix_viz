@@ -7,14 +7,14 @@ class GenerationMixDataHandler:
         self.ba_name = ba_name
 
     def store_latest(self):
-        gen_mix_data = self.latest_gen_mix_data()
+        gen_mix_data = self.yesterdays_gen_mix_data()
         for generation_data in gen_mix_data.generations():
             self.store_generation(generation_data)
         return gen_mix_data # TODO what do I want to return here?
 
 
-    def latest_gen_mix_data(self):
-        return GenerationAdapter.get_latest(self.ba_name)
+    def yesterdays_gen_mix_data(self):
+        return GenerationAdapter.get_yesterday(self.ba_name)
 
 
     def store_generation(self, data):

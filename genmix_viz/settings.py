@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'caiso.apps.CaisoConfig',
     'django_celery_beat',
     'rest_framework',
+    'webpack_loader'
 ]
 
 MIDDLEWARE = [
@@ -123,7 +124,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'assets'),
+]
+
 
 # Celery
 
 CELERY_BROKER_URL = 'redis://localhost'
+
+
+# Webpack
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
