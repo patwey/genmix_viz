@@ -19,8 +19,7 @@ class Chart extends React.Component {
     fetch(this.props.url)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
-      this.setState({ data: data['generation_mixes'].sort((a, b) => { return a.time - b.time }) })
+      this.setState({ data: data['generation_mixes'] })
     })
     .catch((error) => {
       console.log(error)
@@ -33,13 +32,13 @@ class Chart extends React.Component {
 
   render() {
     if (this.state.data.length > 0) {
-      var keys = Object.keys(this.state.data[0]).filter((k) => { return k != 'time' })
+      var keys = Object.keys(this.state.data[0]).filter((k) => { return k != 'timestamp' })
     } else {
       var keys = []
     }
 
     if (this.state.data.length > 0) {
-      var lastUpdated = 'Last updated: ' + this.props.moment(this.state.data[this.state.data.length - 1].time * 1000).format('MMM Do, h:mm a')
+      var lastUpdated = 'Last updated: ' + this.props.moment(this.state.data[this.state.data.length - 1].timestamp * 1000).format('MMM Do, h:mm a')
     } else {
       var lastUpdated = null
     }
@@ -53,7 +52,7 @@ class Chart extends React.Component {
     ]
     var colorsLength = colors.length
 
-    var ticks = this.state.data.map((d) => { return d.time })
+    var ticks = this.state.data.map((d) => { return d.timestamp })
     var domain = [ticks[0], ticks[ticks.length - 1]]
 
     return (
@@ -62,7 +61,7 @@ class Chart extends React.Component {
         <p>{lastUpdated}</p>
 
         <LineChart width={1000} height={500} data={this.state.data} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-         <XAxis dataKey="time"
+         <XAxis dataKey="timestamp"
                 tickFormatter={(tick) => { return this.props.moment(tick * 1000).format('h a') } }
                 domain={domain}
                 ticks={ticks}
@@ -101,4 +100,4 @@ class Chart extends React.Component {
   }
 }
 
-ReactDOM.render(<Chart url='/caiso/latest' moment={moment}/>, document.getElementById('content'))
+ReactDOM.render(<Chart url='/caiso/yesterdays_mixes' moment={moment}/>, document.getElementById('content'))

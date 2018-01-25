@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'caiso.apps.CaisoConfig',
     'django_celery_beat',
-    'rest_framework',
     'webpack_loader'
 ]
 

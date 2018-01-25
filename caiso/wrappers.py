@@ -1,3 +1,6 @@
+# TODO: do I want these?
+# TODO: did I give these a good name?
+
 class GenerationMixDataWrapper:
     def __init__(self, data):
         self.data = data
