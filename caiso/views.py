@@ -13,7 +13,7 @@ def index(request):
 @csrf_exempt
 def yesterdays_mixes(request):
     ba = BalancingAuthority.objects.get(name='CAISO')
-    gms = GenerationMix.objects.filter(balancing_authority=ba)[:24]
+    gms = GenerationMix.objects.filter(balancing_authority=ba).order_by('-id')[:24]
     gms = sorted(gms, key=lambda gm: gm.timestamp)
 
     serialized_gms = []
