@@ -93,9 +93,11 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# webpack
-webpack-stats.json
-bundles/
-
 # npm
 node_modules/
+
+# build artifacts
+venv
+*.pyc
+staticfiles
+.env

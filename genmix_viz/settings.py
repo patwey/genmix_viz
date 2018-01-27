@@ -21,11 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0n!gva$l64-vp2)@c0kqt+-@7u6j^#w6p-h525fi@td10(u)=v'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'my-dev-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG=True
 ALLOWED_HOSTS = []
 
 
@@ -130,14 +129,17 @@ STATICFILES_DIRS = [
 
 # Celery
 
-CELERY_BROKER_URL = 'redis://localhost'
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://')
 
 
-# Webpack
+# Webpack .
 
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'STATS_FILE': os.path.join(BASE_DIR, './webpack-stats.json')
     }
 }
+
+import django_heroku
+django_heroku.settings(locals())
